@@ -1,6 +1,17 @@
 version: '3'
 
 services:
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    environment:
+      RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+
   db:
     image: postgres
     environment:
@@ -17,7 +28,8 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - db  
+      - db
+      - rabbitmq  
     volumes: 
       - .:/usr/src/app
 
