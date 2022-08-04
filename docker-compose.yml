@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=admin
+      - POSTGRES_DB=postgres
+    env_file:
+      - .env  
+    ports:
+      - "5434:5432"
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db  
+    volumes: 
+      - .:/usr/src/app
+
+networks:
+  default:
+    external:
+      name: rabbitmqNetwork  
+
+
+    
